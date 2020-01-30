@@ -41,48 +41,55 @@
 // document.querySelector('.wrapper').insertAdjacentElement('afterbegin', dropDown.$el);
 /* ------------------------------- */
 //no select tag
-let dropdown = document.querySelector('.dropdown'),
-	label = document.querySelector('.dropdown__label'),
-	menu = document.querySelector('.dropdown__menu');
 
 
-label.addEventListener('click', function () {
-	dropdown.classList.toggle('open');
-});
 
+
+
+// this.$el = document.querySelector(selector),
+// this.$label = document.querySelector('.dropdown__label'),
+// 	menu = document.querySelector('.dropdown__menu');
 class Dropdown {
-	constructor(name, obj) {
-		this.name = name;
-		this.obj = obj;
-	}
-	create() {
-		for (let i = 0; i < this.obj.items.length; i++) {
-			if (i == 0) {
-				label.textContent = this.obj.items[i].label;
-			} else {
-				let li = document.createElement('li');
-				li.innerHTML = this.obj.items[i].label;
-				menu.insertAdjacentElement('afterbegin', li);
-			}
+	constructor(selector, obj) {
+		this.items = obj.items;
+		this.$el = document.querySelector(`.${selector}`);
+		this.$label = document.querySelector(`.${selector}__label`);
+		this.$menu = document.querySelector(`.${selector}__menu`);
+
+		this.$label.textContent = this.items[0].label;
+		
+		for (let i = 0; i < this.items.length; i++) {
+			let li = document.createElement('li');
+			li.textContent = this.items[i].label;
+			this.$menu.insertAdjacentElement('beforeend', li);
 		}
-		return this;
-	}
-	getActive() {
-		menu.addEventListener('click', function (event) {
+
+		this.$label.addEventListener('click', () => {
+			this.toggle();
+		});
+
+		this.$menu.addEventListener('click', function (event) {			
 			if (event.target && event.target.tagName == 'LI') {
 				//текущий город кидаем в конец выпадабщего списка
-				let activeToNot = document.createElement('li');
-				activeToNot.textContent = label.textContent;
-				menu.insertAdjacentElement('beforeend', activeToNot);
+			
+			
+			
 
 				//выбранный город кидаем в текущий
-				label.textContent = event.target.textContent;
-				event.target.remove();
-
-				dropdown.classList.toggle('open');
+				this.$label.textContent = event.target.textContent;
+				this.toggle();
 			}
-		});
+		}.bind(this));
 	}
+		
+	toggle() {
+		if (this.$el.classList.contains('open')){
+			this.$el.classList.remove('open');
+		} else {
+			this.$el.classList.add('open');
+		}
+	}
+
 }
 
 let obj = {
@@ -100,4 +107,4 @@ let obj = {
 	]
 };
 
-const dropDown = new Dropdown('dropdown', obj).create().getActive();
+const dropDown = new Dropdown('dropdown', obj);
