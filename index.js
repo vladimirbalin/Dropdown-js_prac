@@ -41,14 +41,6 @@
 // document.querySelector('.wrapper').insertAdjacentElement('afterbegin', dropDown.$el);
 /* ------------------------------- */
 //no select tag
-
-
-
-
-
-// this.$el = document.querySelector(selector),
-// this.$label = document.querySelector('.dropdown__label'),
-// 	menu = document.querySelector('.dropdown__menu');
 class Dropdown {
 	constructor(selector, obj) {
 		this.items = obj.items;
@@ -57,7 +49,7 @@ class Dropdown {
 		this.$menu = document.querySelector(`.${selector}__menu`);
 
 		this.$label.textContent = this.items[0].label;
-		
+
 		for (let i = 0; i < this.items.length; i++) {
 			let li = document.createElement('li');
 			li.textContent = this.items[i].label;
@@ -70,12 +62,6 @@ class Dropdown {
 
 		this.$menu.addEventListener('click', function (event) {			
 			if (event.target && event.target.tagName == 'LI') {
-				//текущий город кидаем в конец выпадабщего списка
-			
-			
-			
-
-				//выбранный город кидаем в текущий
 				this.$label.textContent = event.target.textContent;
 				this.toggle();
 			}
@@ -89,7 +75,6 @@ class Dropdown {
 			this.$el.classList.add('open');
 		}
 	}
-
 }
 
 let obj = {
