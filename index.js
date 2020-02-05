@@ -50,22 +50,20 @@ class Dropdown {
 
 		this.$label.textContent = this.items[0].label;
 
-		for (let i = 0; i < this.items.length; i++) {
+		Array.from(this.items).forEach(element => {
 			let li = document.createElement('li');
-			li.textContent = this.items[i].label;
+			li.textContent = element.label;
 			this.$menu.insertAdjacentElement('beforeend', li);
-		}
-
-		this.$label.addEventListener('click', () => {
-			this.toggle();
 		});
 
-		this.$menu.addEventListener('click', function (event) {			
+		this.$label.addEventListener('click', () => this.toggle());
+
+		this.$menu.addEventListener('click', event => {			
 			if (event.target && event.target.tagName == 'LI') {
 				this.$label.textContent = event.target.textContent;
 				this.toggle();
 			}
-		}.bind(this));
+		});
 	}
 		
 	toggle() {
